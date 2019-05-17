@@ -10,11 +10,18 @@ import { FilmsService } from '../films.service';
 export class ListComponent implements OnInit {
 
   movies: Movie[];
+  message: String = '';
 
   constructor(private fs: FilmsService) { }
 
   ngOnInit() {
-    this.movies = this.fs.allMovies();
+    this.fs.allMovies().subscribe(data => {
+      this.movies = data;
+    },
+      error => {
+        this.message = 'Wystąpił błąd, spróbuj później'
+        console.log(error)
+      });
     console.table(this.movies);
   }
 

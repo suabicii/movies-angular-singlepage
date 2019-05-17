@@ -1,4 +1,7 @@
-<img src="assets/{{ movie.title | lowercase }}.jpg" alt="{{ movie.title }}" width="200px">
-<h1>{{ movie.title }} ({{ movie.year }})</h1>
-<p>{{ movie.description }}</p>
-<button (click)="back()">Cofnij</button>
+<div *ngIf="movie">
+  <!-- wyświetl, jeśli istnieje zmienna "movie" -->
+  <img src="{{ baseUrl + movie.poster }}" alt="{{ movie.title }}" width="200px">
+  <h1>{{ movie.title }} ({{ movie.year }})</h1>
+  <p>{{ movie.description }}</p>
+  <button (click)="back()">Cofnij</button>
+</div>

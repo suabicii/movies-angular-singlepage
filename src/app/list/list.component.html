@@ -1,6 +1,8 @@
-<h3>
+<h3 *ngIf="!message">
+  <!-- Jeśli nie ma zmiennej "message" -->
   Naciśnij na film, aby wyświetlić detale
 </h3>
+<h3>{{ message }}</h3>
 <div class="film" *ngFor="let movie of movies" routerLink="movie/{{ movie.id }}">
-  <img src="assets/{{ movie.title | lowercase }}.jpg" alt="{{ movie.title }}" width="100px">
+  <img src="{{ movie.poster }}" alt="{{ movie.title }}" height="150px" width="100px">
 </div>

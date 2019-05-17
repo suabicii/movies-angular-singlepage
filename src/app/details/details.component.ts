@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Movie } from '../models/movie';
 import { FilmsService } from '../films.service';
 import { Location } from '@angular/common';
+import { environment } from '../../environments/environment'
 
 @Component({
   selector: 'app-details',
@@ -12,13 +13,16 @@ import { Location } from '@angular/common';
 export class DetailsComponent implements OnInit {
 
   movie: Movie;
+  baseUrl: String = environment.apiURL
 
   constructor(private route: ActivatedRoute, private fs: FilmsService, private location: Location) { }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    console.log(`id: ${id}`);
-    this.movie = this.fs.getMovie(Number(id)); //przerobienie id ze string na number
+    this.fs.getMovie(Number(id)).subscribe(data => {
+      this.movie = data;
+    },
+      error => console.log(error));
   }
 
   back() {

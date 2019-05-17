@@ -1,24 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Movie } from './models/movie';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilmsService {
 
-  private movies: Movie[] = [
-    { id: 0, title: 'Titanic', description: 'Rok 1912, brytyjski statek Titanic wyrusza w swój dziewiczy rejs do USA. Na pokładzie emigrant Jack przypadkowo spotyka arystokratkę Rose.', year: 1997 },
-    { id: 1, title: 'Terminator', description: 'Elektroniczny morderca zostaje wysłany z przyszłości do roku 1984, by zabić matkę przyszłego lidera rewolucji. W ślad za nim rusza Kyle Reese, który ma chronić kobietę.', year: 1984 },
-    { id: 2, title: 'Avatar', description: 'Jake, sparaliżowany były komandos, zostaje wysłany na planetę Pandora, gdzie zaprzyjaźnia się z lokalną społecznością i postanawia jej pomóc.', year: 2009 }
-  ];
+  private baseUrl: String = environment.apiURL
+  private token: String = '2f769e9378362d5c7da628fb7fdb37489f13942d';
+  private httpHeaders = new HttpHeaders(
+    { 'Authorisation': `Token ${this.token}` }
+  );
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  allMovies(): Movie[] {
-    return this.movies;
+  allMovies(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/api/filmy/`, { headers: this.httpHeaders });
   }
 
-  getMovie(id: number): Movie {
-    return this.movies[id];
+  getMovie(id: number): Observable<Movie> {
+    return this.http.get<Movie>(`${this.baseUrl}/api/filmy/${id}/`);
   }
 }
