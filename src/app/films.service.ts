@@ -12,7 +12,7 @@ export class FilmsService {
   private baseUrl: String = environment.apiURL
   private token: String = '2f769e9378362d5c7da628fb7fdb37489f13942d';
   private httpHeaders = new HttpHeaders(
-    { 'Authorisation': `Token ${this.token}` }
+    { 'Authorization': `Token ${this.token}` }
   );
 
   constructor(private http: HttpClient) { }
@@ -22,6 +22,6 @@ export class FilmsService {
   }
 
   getMovie(id: number): Observable<Movie> {
-    return this.http.get<Movie>(`${this.baseUrl}/api/filmy/${id}/`);
+    return this.http.get<Movie>(`${this.baseUrl}/api/filmy/${id}/`, { headers: this.httpHeaders });
   }
 }
